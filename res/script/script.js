@@ -32,7 +32,6 @@ window.onload = function(){
 
     function ejercicio2(){
         mainApp.removeChild(mainApp.firstElementChild);
-        
     }
 
     botonesHeader.forEach(boton => {
