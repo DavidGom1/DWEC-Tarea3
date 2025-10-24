@@ -33,6 +33,10 @@ window.onload = function(){
     function ejercicio2(){
         function compresorCadenas(cadenaRaw){
             let textoComprimido = "";
+            if(/\d/.test(cadenaRaw)) {
+                alert('No se permiten numeros en el compresor.');
+                return;
+            }
             for(let i = 0; i < cadenaRaw.length; i++){
                 if(cadenaRaw[i]===" "){
                     textoComprimido+="?";
@@ -51,8 +55,20 @@ window.onload = function(){
         }
 
         function descompresorCadenas(textoComprimido) {
+            let textoResultado = "";
+            for(i=0; i<textoComprimido.length; i++) {
+                console.log(textoComprimido[i]);
+                if (textoComprimido[i] === "?") {
+                    console.log('aqui no peta');
+                    textoResultado += ' ';
+                } else  if(isNaN(textoComprimido[i])){
+                    for(j=0; j<textoComprimido[i-1]; j++) {
+                        textoResultado += textoComprimido[i];
+                    }
+                }
+            }
             let resultado = document.createElement('h2')
-            resultado.innerText = textoComprimido;
+            resultado.innerText = textoResultado;
             resultado.style.color = "var(--primario)";
             return resultado;
         }
