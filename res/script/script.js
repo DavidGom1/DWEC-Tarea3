@@ -31,7 +31,92 @@ window.onload = function(){
     }
 
     function ejercicio2(){
+        function compresorCadenas(cadenaRaw){
+            let textoComprimido = "";
+            for(let i = 0; i < cadenaRaw.length; i++){
+                if(cadenaRaw[i]===" "){
+                    textoComprimido+="?";
+                }
+                let contador = 1;
+                while(cadenaRaw[i] === cadenaRaw[i+1]){
+                    contador++;
+                    i++;
+                }
+                contador>1 ? textoComprimido+=(contador+cadenaRaw[i]) : textoComprimido+=cadenaRaw[i];
+            }
+            let resultado = document.createElement('h2')
+            resultado.innerText = textoComprimido;
+            resultado.style.color = "var(--primario)";
+            return resultado;
+        }
+
+        function descompresorCadenas(textoComprimido) {
+            let resultado = document.createElement('h2')
+            resultado.innerText = textoComprimido;
+            resultado.style.color = "var(--primario)";
+            return resultado;
+        }
+
+
         mainApp.removeChild(mainApp.firstElementChild);
+        let contenedor1 = document.createElement('div');
+        contenedor1.style.display = "flex";
+        contenedor1.style.flexDirection = "column";
+        contenedor1.style.alignItems = "center";
+        contenedor1.style.textAlign =  "center";
+        let contenedor2 = document.createElement('div');
+        contenedor2.style.display = "flex";
+        contenedor2.style.flexDirection = "row";
+        contenedor2.style.gap = "1rem";
+        contenedor2.style.alignItems = "center";
+        contenedor2.style.textAlign =  "center";
+        let titulo = document.createElement('h1');
+        titulo.innerText = "Compresor de cadenas";
+        titulo.style.color = "var(--primario)";
+        titulo.style.marginRight = "20px";
+        let resultado = document.createElement("h2");
+        resultado.textContent = "#";
+        resultado.style.visibility = "hidden";
+        contenedor1.appendChild(titulo);
+        contenedor1.appendChild(contenedor2);
+        contenedor1.appendChild(resultado);
+
+        function addInput(textoInput, textoBoton) {
+            let contenedor = document.createElement('div');
+            contenedor.display = "flex";
+            contenedor.style.flexDirection = "column";
+            contenedor.style.gap = "1rem";
+            contenedor.style.alignItems = "center";
+            contenedor.style.textAlign =  "center";
+            let textofield = document.createElement('input');
+            textofield.type = "text";
+            textofield.placeholder = textoInput;
+            textofield.style.marginRight = "10px";
+            let boton = document.createElement('button');
+            boton.innerText = textoBoton;
+            boton.style.padding = "5px 10px";
+            boton.style.borderRadius = "5px";
+            boton.style.border = "none";
+            boton.style.backgroundColor = "var(--secundario)";
+            boton.style.color = "white";
+            boton.style.cursor = "pointer";
+            contenedor.appendChild(textofield);
+            contenedor.appendChild(boton);
+            contenedor2.appendChild(contenedor);
+            boton.addEventListener('click', () => {
+                if(contenedor1.lastElementChild.tagName == 'H2')contenedor1.lastElementChild.remove();
+                if(boton.innerText=='Comprimir'){
+                    contenedor1.appendChild(compresorCadenas(textofield.value));
+                } else {
+                    contenedor1.appendChild(descompresorCadenas(textofield.value));
+                }
+            });
+        }
+
+        addInput("Escribe para comprimir", "Comprimir");
+        addInput("Escribe para descomprimir", "Descomprimir");
+
+        mainApp.appendChild(contenedor1);
     }
 
     botonesHeader.forEach(boton => {
@@ -41,7 +126,7 @@ window.onload = function(){
                     ejercicio1();
                     break;
                 case 'b2':
-                    console.log('hola');
+                    ejercicio2();
                     break;
                 case 'b3':
                     console.log('hola');
