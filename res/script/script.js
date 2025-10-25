@@ -205,7 +205,6 @@ window.onload = function(){
         mainApp.appendChild(textoRedireccion);
         setInterval(() => {
             textoRedireccion.textContent = "Redireccionando a Home en " + --segundosParaHome + " segundos.";
-            mainApp.appendChild(textoRedireccion);
         }, 1000);
         setTimeout(() => {
             location.reload();
