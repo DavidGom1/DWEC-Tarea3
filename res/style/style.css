@@ -1,7 +1,7 @@
 :root {
-    --primario: grey;
-    --secundario: rgb(94, 94, 94);
-    --fondo: rgba(168, 168, 168, 0.438);
+    --primario: rgb(34, 93, 128);
+    --secundario: rgb(0, 71, 104);
+    --fondo: rgba(142, 181, 231, 0.438);
 }
 
 html {
@@ -34,16 +34,17 @@ header nav {
     align-items: center;
 }
 
-header button {
+button {
     color: white;
     background-color: var(--secundario);
     border: none;
     border-radius: .25rem;
     padding: 10px;
+    cursor: pointer;
     transition:  transform .3s ease, box-shadow .3s ease;
 }
 
-header button:hover{
+button:hover{
     transform: scale(1.1);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
 }
@@ -53,6 +54,10 @@ main {
     justify-content: center;
     align-items: center;
     height: calc(100vh - 48px - 80px);
+}
+
+h2 {
+    color: var(--primario);
 }
 
 #presentacion  {
@@ -68,9 +73,40 @@ main {
 }
 
 #presentacion h1 {
-    color: grey;
+    color: var(--primario);
     font-size: 2rem;
     font-weight: 700;
+}
+
+.divFlexCenterColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.divFlexCenterRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+}
+
+#ventanaEj1 {
+    width: 600px;
+    height: 400px;
+    background-color: var(--primario);
+    box-shadow: 0 0 20px grey;
+    border-radius: 20px;
+}
+
+.boton {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--secundario);
+    color: white;
+    cursor: pointer;
 }
 
 footer {

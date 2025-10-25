@@ -5,14 +5,8 @@ window.onload = function(){
     function ejercicio1(){
         mainApp.removeChild(mainApp.firstElementChild);
         let ventana = document.createElement('div');
-        ventana.style.width = "600px";
-        ventana.style.height = "400px";
-        ventana.style.backgroundColor = "var(--primario)";
-        ventana.style.boxShadow = "0 0 20px grey";
-        ventana.style.borderRadius = "20px";
-        ventana.style.display = "flex";
-        ventana.style.alignItems = "center";
-        ventana.style.textAlign =  "center";
+        ventana.className = "divFlexCenterColumn";
+        ventana.id = "ventanaEj1";
 
         const fechaActual = new Date();
         const dia = String(fechaActual.getDate());
@@ -57,15 +51,30 @@ window.onload = function(){
         function descompresorCadenas(textoComprimido) {
             let textoResultado = "";
             for(i=0; i<textoComprimido.length; i++) {
-                console.log(textoComprimido[i]);
-                if (textoComprimido[i] === "?") {
-                    console.log('aqui no peta');
-                    textoResultado += ' ';
-                } else  if(isNaN(textoComprimido[i])){
-                    for(j=0; j<textoComprimido[i-1]; j++) {
-                        textoResultado += textoComprimido[i];
+                ch = textoComprimido[i].trim();
+
+                switch(true) {
+
+                    case ch === "":
+                        break;
+
+                    case ch === "?":
+                        textoResultado += ' ';
+                        break;
+
+                    case !isNaN(Number(ch)):
+                        for(j=0; j<Number(ch); j++) {
+                            textoResultado += textoComprimido[i+1];
+                        }
+                        break;
+
+                    default:
+                        if(!/^[0-9]$/.test(textoComprimido[i-1])) {
+                            textoResultado += textoComprimido[i];
+                        }
+                        break;
+
                     }
-                }
             }
             let resultado = document.createElement('h2')
             resultado.innerText = textoResultado;
@@ -76,19 +85,12 @@ window.onload = function(){
 
         mainApp.removeChild(mainApp.firstElementChild);
         let contenedor1 = document.createElement('div');
-        contenedor1.style.display = "flex";
-        contenedor1.style.flexDirection = "column";
-        contenedor1.style.alignItems = "center";
-        contenedor1.style.textAlign =  "center";
+        contenedor1.className = "divFlexCenterColumn";
         let contenedor2 = document.createElement('div');
-        contenedor2.style.display = "flex";
-        contenedor2.style.flexDirection = "row";
-        contenedor2.style.gap = "1rem";
-        contenedor2.style.alignItems = "center";
-        contenedor2.style.textAlign =  "center";
-        let titulo = document.createElement('h1');
+        contenedor2.className = "divFlexCenterRow";
+        contenedor2.style.gap = "3rem";
+        let titulo = document.createElement('h2');
         titulo.innerText = "Compresor de cadenas";
-        titulo.style.color = "var(--primario)";
         titulo.style.marginRight = "20px";
         let resultado = document.createElement("h2");
         resultado.textContent = "#";
@@ -99,23 +101,14 @@ window.onload = function(){
 
         function addInput(textoInput, textoBoton) {
             let contenedor = document.createElement('div');
-            contenedor.display = "flex";
-            contenedor.style.flexDirection = "column";
+            contenedor.className = "divFlexCenterRow"
             contenedor.style.gap = "1rem";
-            contenedor.style.alignItems = "center";
-            contenedor.style.textAlign =  "center";
             let textofield = document.createElement('input');
             textofield.type = "text";
             textofield.placeholder = textoInput;
-            textofield.style.marginRight = "10px";
             let boton = document.createElement('button');
             boton.innerText = textoBoton;
-            boton.style.padding = "5px 10px";
-            boton.style.borderRadius = "5px";
-            boton.style.border = "none";
-            boton.style.backgroundColor = "var(--secundario)";
-            boton.style.color = "white";
-            boton.style.cursor = "pointer";
+            boton.className = "boton";
             contenedor.appendChild(textofield);
             contenedor.appendChild(boton);
             contenedor2.appendChild(contenedor);
@@ -135,6 +128,90 @@ window.onload = function(){
         mainApp.appendChild(contenedor1);
     }
 
+    function ejercicio3(){
+
+        mainApp.removeChild(mainApp.firstElementChild);
+
+        const contenedor1 = document.createElement("div");
+        contenedor1.className = "divFlexCenterColumn";
+        contenedor1.style.alignItems = "center";
+
+        const contenedor2 = document.createElement("div");
+        contenedor2.className = "divFlexCenterRow";
+        contenedor2.style.gap = "2rem";
+        
+        const botonReset = document.createElement("button");
+        botonReset.innerText = "Reset";
+        botonReset.className = "button";
+        botonReset.style.fontSize = "2rem";
+        botonReset.style.padding = "3px";
+        botonReset.style.scale = "0.8";
+
+        const botonSumarUno = document.createElement("button");
+        botonSumarUno.innerText = "+1";
+        botonSumarUno.className = "button";
+        botonSumarUno.style.fontSize = "2rem";
+        botonSumarUno.style.aspectRatio = "1 / 1";
+        botonSumarUno.style.width = "3rem";
+        botonSumarUno.style.padding = "3px";
+
+        const botonSumarMax = document.createElement("button");
+        botonSumarMax.innerText = "Max -2";
+        botonSumarMax.className = "button";
+        botonSumarMax.style.fontSize = "2rem";
+        botonSumarMax.style.padding = "3px";
+        botonSumarMax.style.scale = "0.8";
+
+        const textoVecesPulsado = document.createElement("h2");
+        textoVecesPulsado.textContent = "Veces pulsado: " + localStorage.getItem("pulsaciones");
+
+        botonReset.addEventListener("click", () => {
+            localStorage.setItem("pulsaciones", 0);
+            textoVecesPulsado.textContent = "Veces pulsado: 0";
+        });
+
+        botonSumarUno.addEventListener("click", () => {
+            if(localStorage.getItem("pulsaciones")<Number.MAX_SAFE_INTEGER) {
+                localStorage.setItem("pulsaciones",
+                    (Number(localStorage.getItem("pulsaciones"))+1)
+                );
+                textoVecesPulsado.textContent = "Veces pulsado: " + localStorage.getItem("pulsaciones");
+            } else {
+                alert("Ya no se pueden realizar nmás clicks")
+            }
+        });
+
+        botonSumarMax.addEventListener("click", () => {
+                localStorage.setItem("pulsaciones",
+                    (Number.MAX_SAFE_INTEGER-2)
+                );
+                textoVecesPulsado.textContent = "Veces pulsado: " + localStorage.getItem("pulsaciones");
+        });
+        contenedor1.appendChild(textoVecesPulsado);
+        contenedor2.appendChild(botonReset);
+        contenedor2.appendChild(botonSumarUno);
+        contenedor2.appendChild(botonSumarMax);
+        contenedor1.appendChild(contenedor2);
+        mainApp.appendChild(contenedor1);
+
+    }
+
+    function ejercicio4() {
+        mainApp.removeChild(mainApp.firstElementChild);
+
+        const textoRedireccion = document.createElement("h2");
+        textoRedireccion.textContent = "Redireccionando a Home en 3 segundos."
+        let segundosParaHome = 3;
+        mainApp.appendChild(textoRedireccion);
+        setInterval(() => {
+            textoRedireccion.textContent = "Redireccionando a Home en " + --segundosParaHome + " segundos.";
+            mainApp.appendChild(textoRedireccion);
+        }, 1000);
+        setTimeout(() => {
+            location.reload();
+        }, segundosParaHome*1000);
+    }
+
     botonesHeader.forEach(boton => {
         boton.addEventListener('click', () => {
             switch(boton.id){
@@ -145,10 +222,10 @@ window.onload = function(){
                     ejercicio2();
                     break;
                 case 'b3':
-                    console.log('hola');
+                    ejercicio3();
                     break;
                 case 'b4':
-                    console.log('hola');
+                    ejercicio4();
                     break;
                 case 'home':
                     location.reload();
