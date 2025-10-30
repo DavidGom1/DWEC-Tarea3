@@ -3,8 +3,7 @@ window.onload = function(){
     const botonesHeader = document.querySelectorAll('header button');
 
     function ejercicio1(){
-        mainApp.removeChild(mainApp.firstElementChild);
-        let ventana = document.createElement('div');
+        let ventana = window.open("diasFinAnyo.html", "nueva", "width=600,height=400");
         ventana.className = "divFlexCenterColumn";
         ventana.id = "ventanaEj1";
 
